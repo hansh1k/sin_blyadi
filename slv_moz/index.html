@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ФК «Славия-Мозырь» — Интерактивный портал</title>
+    <meta
+      name="description"
+      content="Интерактивный одностраничный сайт футбольного клуба «Славия-Мозырь» с 3D-сборкой герба, витриной трофеев, каруселью игроков и хроникой клуба."
+    />
+    <meta property="og:title" content="ФК «Славия-Мозырь» — Интерактивный портал" />
+    <meta
+      property="og:description"
+      content="Официальные цвета, 3D-сборка герба ФК «Славия-Мозырь», интерактивная витрина трофеев и досье игроков."
+    />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Onest:wght@300;400;500;600;700&family=Oswald:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/index.css" />
+  </head>
+  <body>
+    <div id="stage" class="stage pre">
+      <!-- Subtle Photographic Night Stadium Atmosphere Under 3D Stage -->
+      <div class="stage-photo-bg" aria-hidden="true">
+        <img
+          src="/src/assets/images/stadium_yunost_night_1795674870952.jpg"
+          alt=""
+          referrerpolicy="no-referrer"
+        />
+      </div>
+
+      <!-- Fixed Full-Bleed Alpha-Compatible 3D WebGL Stage (Crest + Trophies) -->
+      <div id="webgl-stage" class="webgl-stage" aria-hidden="true"></div>
+      <div class="stage-vignette" aria-hidden="true"></div>
+
+      <!-- Custom Fine-Pointer Cursor -->
+      <div id="custom-cursor" class="custom-cursor" aria-hidden="true">
+        <span class="cursor-ring"></span>
+        <span class="cursor-dot"></span>
+        <span class="cursor-label" id="cursor-label"></span>
+      </div>
+
+      <!-- Fixed Minimal Top Bar (Strict 3-Zone Contract) -->
+      <header class="topbar" role="banner">
+        <a
+          href="#hero"
+          class="brand-mark"
+          data-scroll-target="hero"
+          data-cursor="hover"
+          aria-label="ФК Славия-Мозырь — наверх"
+        >
+          <img
+            class="brand-crest"
+            src="/assets/aistudio/gerb-dark_766805bf.jpg"
+            alt=""
+            referrerpolicy="no-referrer"
+          />
+          <span class="brand-name">Славия-Мозырь</span>
+        </a>
+
+        <nav class="main-nav" aria-label="Основная навигация">
+          <ul class="nav-list">
+            <li class="nav-mask">
+              <a href="#hero" class="nav-link" data-scroll-target="hero" data-cursor="hover"
+                >Герб</a
+              >
+            </li>
+            <li class="nav-mask">
+              <a
+                href="#trophies"
+                class="nav-link"
+                data-scroll-target="trophies"
+                data-cursor="hover"
+                >Трофеи</a
+              >
+            </li>
+            <li class="nav-mask">
+              <a
+                href="#squad"
+                class="nav-link"
+                data-scroll-target="squad"
+                data-cursor="hover"
+                >Состав</a
+              >
+            </li>
+            <li class="nav-mask">
+              <a
+                href="#chronicle"
+                class="nav-link"
+                data-scroll-target="chronicle"
+                data-cursor="hover"
+                >Хроника</a
+              >
+            </li>
+          </ul>
+        </nav>
+
+        <div class="topbar-actions">
+          <button
+            type="button"
+            id="btn-replay-crest"
+            class="btn-replay"
+            data-cursor="hover"
+            aria-label="Повторить 3D-сборку герба"
+          >
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path
+                d="M16.2 10a6.2 6.2 0 1 1-1.6-4.15M16.2 3.8v2.9h-2.9"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <span>Собрать герб</span>
+          </button>
+          <button
+            type="button"
+            id="btn-mobile-menu"
+            class="btn-mobile-menu"
+            aria-label="Открыть меню навигации"
+            aria-expanded="false"
+            aria-controls="mobile-drawer"
+          >
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Mobile Navigation Drawer -->
+      <div id="mobile-drawer" class="mobile-drawer" hidden>
+        <nav aria-label="Мобильная навигация">
+          <a href="#hero" data-scroll-target="hero">3D-Герб</a>
+          <a href="#trophies" data-scroll-target="trophies">Витрина трофеев</a>
+          <a href="#squad" data-scroll-target="squad">Состав команды</a>
+          <a href="#chronicle" data-scroll-target="chronicle">Хроника и стадион</a>
+        </nav>
+      </div>
+
+      <!-- Subtle Vertical Club Glyphs Column (referencing code1.txt rhythm) -->
+      <aside class="glyph-rail" aria-hidden="true">
+        <span class="glyph-mark"></span>
+        <span class="glyph-line"></span>
+        <span class="glyph-diamond"></span>
+        <span class="glyph-cross"></span>
+        <span class="glyph-star"></span>
+        <span class="glyph-line"></span>
+        <span class="glyph-mark"></span>
+      </aside>
+
+      <!-- Main Scrollable Document Layer -->
+      <main id="main-content" class="content-layer">
+        <!-- SECTION 1: HERO & 3D CREST ASSEMBLY -->
+        <section id="hero" class="section hero-section" aria-labelledby="hero-heading">
+          <div class="hero-top-grid">
+            <div class="hero-title-wrap">
+              <p class="hero-eyebrow mask-box">
+                <span class="mask-inner" data-intro="eyebrow"
+                  >Футбольный клуб · Основан в 1987 году · Мозырь</span
+                >
+              </p>
+              <h1 id="hero-heading" class="hero-title mask-box">
+                <span class="mask-inner" data-intro="title"
+                  >Славия-Мозырь — характер Полесья</span
+                >
+              </h1>
+            </div>
+
+            <div class="hero-lead-wrap">
+              <div class="hero-lead mask-box">
+                <p class="mask-inner" data-intro="body">
+                  Красно-чёрная традиция, два «золотых дубля» и бронза Высшей лиги 2025 года.
+                  Объёмный герб собирается из элементов истории клуба и уходит в глубину сцены,
+                  открывая витрину трофеев и состав команды.
+                </p>
+              </div>
+              <div class="hero-cta-row mask-box">
+                <div class="mask-inner hero-cta-inner" data-intro="cta">
+                  <button
+                    type="button"
+                    class="btn-primary sweep-host"
+                    data-scroll-target="trophies"
+                    data-cursor="hover"
+                  >
+                    <span>К витрине трофеев</span>
+                    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                      <path
+                        d="M4 10h12m-5-5 5 5-5 5"
+                        stroke="currentColor"
+                        stroke-width="1.6"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+                  <button
+                    type="button"
+                    class="btn-ghost"
+                    id="btn-hero-replay"
+                    data-cursor="hover"
+                  >
+                    Повторить сборку герба
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Architectural Editorial Masthead Framing the 3D Crest -->
+          <div class="hero-stage-spacer" aria-hidden="true">
+            <div class="big-word" id="big-word">
+              <span><i>С</i><i>Л</i><i>А</i><i>В</i><i>І</i><i>Я</i></span>
+            </div>
+          </div>
+
+          <!-- 4 Indexed Editorial Captions at Hero Bottom (code1.txt pattern) -->
+          <div class="hero-captions" role="list">
+            <article class="caption-item mask-box" role="listitem">
+              <div class="caption-inner" data-intro="caption">
+                <span class="caption-num">01</span>
+                <span class="caption-copy"
+                  >Двукратный чемпион<br />и обладатель Кубка (1996, 2000)</span
+                >
+              </div>
+            </article>
+            <article class="caption-item mask-box" role="listitem">
+              <div class="caption-inner" data-intro="caption">
+                <span class="caption-num">02</span>
+                <span class="caption-copy"
+                  >Бронзовый призёр<br />Высшей лиги сезона 2025</span
+                >
+              </div>
+            </article>
+            <article class="caption-item mask-box" role="listitem">
+              <div class="caption-inner" data-intro="caption">
+                <span class="caption-num">03</span>
+                <span class="caption-copy"
+                  >Стадион «Юность»<br />рекорд 19 500 зрителей</span
+                >
+              </div>
+            </article>
+            <article class="caption-item mask-box" role="listitem">
+              <div class="caption-inner" data-intro="caption">
+                <span class="caption-num">04</span>
+                <span class="caption-copy"
+                  >Красно-чёрные цвета<br />летопись с 1987 года</span
+                >
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!-- SECTION 2: 3D TROPHIES SHOWCASE IN BACKGROUND -->
+        <section
+          id="trophies"
+          class="section trophies-section"
+          aria-labelledby="trophies-heading"
+        >
+          <div class="trophies-header">
+            <div class="section-heading-block">
+              <span class="section-index">01. Витрина достижений</span>
+              <h2 id="trophies-heading" class="section-title mask-box">
+                <span class="mask-inner">Трофеи клуба в 3D-пространстве</span>
+              </h2>
+            </div>
+            <p class="section-desc">
+              Наведите курсор на любой кубок в глубине сцены или выберите награду на
+              панели ниже: трофей приподнимается, раскрывает грани металла и показывает
+              историю триумфа.
+            </p>
+          </div>
+
+          <!-- Open 3D Stage Window (No Dashed Placeholder Border) + Gallery Placard -->
+          <div class="trophies-stage-layout">
+            <div
+              id="trophy-hit-zone"
+              class="trophy-hit-zone"
+              data-cursor="inspect"
+              aria-label="Интерактивная 3D-витрина трофеев. Наведите или нажмите на кубок."
+            ></div>
+
+            <aside
+              id="trophy-inspector"
+              class="trophy-inspector sweep-host"
+              aria-live="polite"
+            >
+              <div class="inspector-meta">
+                <span id="trophy-season" class="mono-accent">1996</span>
+                <span class="meta-sep">·</span>
+                <span id="trophy-category">Высшая лига</span>
+              </div>
+              <h3 id="trophy-title" class="inspector-title">
+                Чемпион Беларуси — 1996
+              </h3>
+              <p id="trophy-fact" class="inspector-fact">
+                Исторический прорыв мозырского клуба, прервавшего гегемонию минского
+                «Динамо» и оформившего первый «золотой дубль» в истории суверенного
+                футбола.
+              </p>
+              <div class="inspector-actions">
+                <button
+                  type="button"
+                  id="btn-trophy-details"
+                  class="btn-secondary"
+                  data-cursor="hover"
+                >
+                  Подробнее о трофее
+                </button>
+              </div>
+            </aside>
+          </div>
+
+          <!-- Keyboard-Accessible Architectural Trophy Index Strip -->
+          <div
+            id="trophy-dock"
+            class="trophy-dock"
+            role="tablist"
+            aria-label="Выбор клубного трофея"
+          ></div>
+        </section>
+
+        <!-- SECTION 3: INTERACTIVE PLAYER CAROUSEL & TACTICAL PINS -->
+        <section id="squad" class="section squad-section" aria-labelledby="squad-heading">
+          <div class="squad-header">
+            <div class="section-heading-block">
+              <span class="section-index">02. Основной состав</span>
+              <h2 id="squad-heading" class="section-title mask-box">
+                <span class="mask-inner">Игроки «Славии-Мозырь»</span>
+              </h2>
+            </div>
+
+            <div class="carousel-controls-bar">
+              <div class="carousel-counter mono-accent" aria-live="polite">
+                <span id="carousel-current">01</span>
+                <span class="counter-slash">/</span>
+                <span id="carousel-total">10</span>
+              </div>
+
+              <button
+                type="button"
+                id="btn-autoplay"
+                class="btn-icon-text"
+                data-cursor="hover"
+                aria-pressed="true"
+                aria-label="Пауза автопрокрутки карусели"
+              >
+                <span id="autoplay-label">Авто: вкл</span>
+              </button>
+
+              <div class="carousel-arrows">
+                <button
+                  type="button"
+                  id="btn-prev-player"
+                  class="btn-circle"
+                  data-cursor="hover"
+                  aria-label="Предыдущий игрок"
+                >
+                  <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                    <path
+                      d="M12.5 5 7.5 10l5 5"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </button>
+                <button
+                  type="button"
+                  id="btn-next-player"
+                  class="btn-circle"
+                  data-cursor="hover"
+                  aria-label="Следующий игрок"
+                >
+                  <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                    <path
+                      d="M7.5 5 12.5 10l-5 5"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Progress Track & Clean Roster Index Strip -->
+          <div class="carousel-progress-shell">
+            <div class="carousel-progress-track" aria-hidden="true">
+              <div id="carousel-progress-fill" class="carousel-progress-fill"></div>
+            </div>
+            <div
+              id="carousel-dots"
+              class="carousel-dots"
+              role="tablist"
+              aria-label="Список игроков"
+            ></div>
+          </div>
+
+          <!-- Split Stage: 3D Tilt Photographic Portrait + Pins (Left) & Editorial Dossier (Right) -->
+          <div class="player-showcase-grid">
+            <div
+              id="player-viewport"
+              class="player-viewport"
+              data-cursor="drag"
+              tabindex="0"
+              aria-roledescription="carousel"
+              aria-label="Карусель игроков ФК Славия-Мозырь. Перетаскивайте карточку или используйте стрелки клавиатуры."
+            >
+              <div id="player-card-3d" class="player-card-3d">
+                <div class="player-card-sheen" id="player-card-sheen" aria-hidden="true"></div>
+                <div id="player-plate" class="player-plate"></div>
+                <!-- Interactive Pins Overlay -->
+                <div
+                  id="player-pins"
+                  class="player-pins"
+                  aria-label="Интерактивные точки характеристик игрока"
+                ></div>
+                <div class="player-card-footer">
+                  <span class="drag-hint">Перетащите или используйте ← / →</span>
+                  <button
+                    type="button"
+                    id="btn-open-player-modal"
+                    class="btn-inspect-inline"
+                    data-cursor="inspect"
+                  >
+                    Открыть досье
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Linked Player Editorial Dossier -->
+            <div id="player-dossier" class="player-dossier" aria-live="polite">
+              <div class="dossier-head">
+                <div class="dossier-number-wrap">
+                  <span id="dossier-number" class="dossier-number mono-accent">09</span>
+                </div>
+                <div class="dossier-identity">
+                  <div id="dossier-role" class="dossier-role">Полузащитник · 174 см</div>
+                  <h3 id="dossier-name" class="dossier-name mask-box">
+                    <span class="mask-inner">Александр Батищев</span>
+                  </h3>
+                </div>
+              </div>
+
+              <p id="dossier-bio" class="dossier-bio"></p>
+
+              <!-- Architectural Editorial Ledger Highlighted by Pins -->
+              <div id="dossier-cards" class="dossier-cards"></div>
+
+              <div class="dossier-actions">
+                <button
+                  type="button"
+                  id="btn-player-details"
+                  class="btn-primary sweep-host"
+                  data-cursor="hover"
+                >
+                  <span>Полное досье игрока</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 4: CLUB CHRONICLE & STADIUM «ЮНОСТЬ» -->
+        <section
+          id="chronicle"
+          class="section chronicle-section"
+          aria-labelledby="chronicle-heading"
+        >
+          <div class="chronicle-header">
+            <div class="section-heading-block">
+              <span class="section-index">03. Хроника и стадион</span>
+              <h2 id="chronicle-heading" class="section-title mask-box">
+                <span class="mask-inner">От «Полесья» 1987 года до бронзы 2025</span>
+              </h2>
+            </div>
+
+            <div class="chronicle-tabs" role="tablist" aria-label="Разделы о клубе">
+              <button
+                type="button"
+                class="tab-btn is-active"
+                role="tab"
+                aria-selected="true"
+                data-chronicle-tab="history"
+                data-cursor="hover"
+              >
+                История клуба
+              </button>
+              <button
+                type="button"
+                class="tab-btn"
+                role="tab"
+                aria-selected="false"
+                data-chronicle-tab="stadium"
+                data-cursor="hover"
+              >
+                Стадион «Юность»
+              </button>
+            </div>
+          </div>
+
+          <div id="chronicle-history-panel" class="chronicle-panel">
+            <div class="chronicle-feature-split">
+              <figure class="chronicle-media">
+                <img
+                  src="/src/assets/images/club_heritage_tunnel_1795674872466.jpg"
+                  alt="Выход на газон стадиона под светом вечерних прожекторов"
+                  referrerpolicy="no-referrer"
+                />
+                <figcaption>
+                  От заводской команды «Полесье» до двух «золотых дублей» и возвращения на пьедестал Беларуси.
+                </figcaption>
+              </figure>
+              <div id="history-timeline" class="history-timeline"></div>
+            </div>
+          </div>
+
+          <div id="chronicle-stadium-panel" class="chronicle-panel" hidden>
+            <div class="chronicle-feature-split stadium-split">
+              <figure class="chronicle-media">
+                <img
+                  src="/src/assets/images/stadium_yunost_night_1795674870952.jpg"
+                  alt="Вечерний матч на стадионе «Юность» в Мозыре под светом прожекторов"
+                  referrerpolicy="no-referrer"
+                />
+                <figcaption>
+                  Стадион «Юность», г. Мозырь, ул. Янки Купалы, 26А — домашняя крепость красно-чёрных с 1991 года.
+                </figcaption>
+              </figure>
+              <div id="stadium-grid" class="stadium-grid"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Quiet Internal Footer -->
+        <footer class="site-footer">
+          <div class="footer-brand">
+            <img
+              class="footer-crest"
+              src="/assets/aistudio/gerb-dark_766805bf.jpg"
+              alt="Герб ФК «Славия-Мозырь»"
+              referrerpolicy="no-referrer"
+            />
+            <div class="footer-brand-copy">
+              <span class="footer-club">ФК «Славия-Мозырь»</span>
+              <span class="footer-sub">Мозырь · Стадион «Юность» · Основан в 1987 году</span>
+            </div>
+          </div>
+          <div class="footer-links">
+            <button type="button" data-scroll-target="hero" data-cursor="hover">
+              Герб
+            </button>
+            <button type="button" data-scroll-target="trophies" data-cursor="hover">
+              Трофеи
+            </button>
+            <button type="button" data-scroll-target="squad" data-cursor="hover">
+              Состав
+            </button>
+            <button type="button" data-scroll-target="chronicle" data-cursor="hover">
+              Хроника
+            </button>
+          </div>
+        </footer>
+      </main>
+
+      <!-- Accessible Lightbox / Detail Modal (Players & Trophies) -->
+      <div
+        id="detail-modal"
+        class="detail-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
+        hidden
+      >
+        <div class="modal-backdrop" id="modal-backdrop"></div>
+        <div class="modal-dialog" id="modal-dialog" tabindex="-1">
+          <button
+            type="button"
+            id="modal-close"
+            class="modal-close"
+            data-cursor="hover"
+            aria-label="Закрыть окно"
+          >
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M6 6l12 12M18 6 6 18"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+              />
+            </svg>
+          </button>
+          <div id="modal-body" class="modal-body"></div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="/src/index.ts"></script>
+  </body>
+</html>
